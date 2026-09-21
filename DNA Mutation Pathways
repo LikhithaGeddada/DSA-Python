@@ -1,0 +1,45 @@
+import sys
+from collections import deque
+
+def solve():
+    lines = [line.strip() for line in sys.stdin.read().splitlines() if line.strip()]
+    if len(lines) < 3:
+        return
+    
+    start = lines[0]
+    end = lines[1]
+    
+    # The bank contains comma-separated DNA sequences
+    bank = set(lines[2].split(','))
+    
+    # If the target sequence is not in the bank, transformation is impossible
+    if end not in bank:
+        print -1
+        return
+    
+    queue = deque([(start, 0)])
+    visited = {start}
+    
+    genes = ['A', 'C', 'G', 'T']
+    
+    while queue:
+        curr, steps = queue.popleft()
+        
+        if curr == end:
+            print steps
+            return
+        
+        # Try mutating each character in the sequence
+        for i in range(len(curr)):
+            for g in genes:
+                if g != curr[i]:
+                    mutated = curr[:i] + g + curr[i+1:]
+                    
+                    if mutated in bank and mutated not in visited:
+                        visited.add(mutated)
+                        queue.append((mutated, steps + 1))
+                        
+    print -1
+
+if __name__ == '__main__':
+    solve()
