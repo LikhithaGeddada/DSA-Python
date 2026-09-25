@@ -1,0 +1,35 @@
+import sys
+
+def solve():
+    # Read all input values from standard input
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+
+    # Parse dimensions N and M
+    n = int(input_data[0])
+    m = int(input_data[1])
+
+    # Parse the matrix elements
+    elements = [int(x) for x in input_data[2:2 + n * m]]
+
+    # Initialize row sums and column sums
+    row_sums = [0] * n
+    col_sums = [0] * m
+
+    # Compute row and column sums
+    for i in range(n):
+        for j in range(m):
+            val = elements[i * m + j]
+            row_sums[i] += val
+            col_sums[j] += val
+
+    # Find the maximum row sum and maximum column sum
+    max_row_sum = max(row_sums)
+    max_col_sum = max(col_sums)
+
+    # Print the lucky number (sum of the maximum row sum and maximum column sum)
+    print(max_row_sum + max_col_sum)
+
+if __name__ == "__main__":
+    solve()
