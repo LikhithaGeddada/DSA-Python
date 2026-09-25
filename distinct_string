@@ -1,0 +1,29 @@
+import sys
+
+def get_canonical_form(s):
+    # Separate characters at even indices and odd indices
+    even_chars = sorted(s[0::2])
+    odd_chars = sorted(s[1::2])
+    
+    # Return a unique tuple representing the canonical form
+    return (tuple(even_chars), tuple(odd_chars))
+
+def solve():
+    # Read all input from standard input
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    n = int(input_data[0])
+    strings = input_data[1:n + 1]
+    
+    # Store unique canonical forms in a set
+    unique_canonical_forms = set()
+    for s in strings:
+        unique_canonical_forms.add(get_canonical_form(s))
+        
+    # The result is the number of distinct canonical forms
+    print(len(unique_canonical_forms))
+
+if __name__ == "__main__":
+    solve()
