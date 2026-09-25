@@ -1,0 +1,43 @@
+import sys
+
+def next_greater_number(n):
+    # Convert number to list of character digits
+    digits = list(str(n))
+    length = len(digits)
+    
+    # Step 1: Find the first digit from the right that is smaller than its next digit
+    i = length - 2
+    while i >= 0 and digits[i] >= digits[i + 1]:
+        i -= 1
+        
+    # If no such digit exists, digits are in descending order -> return -1
+    if i < 0:
+        return -1
+        
+    # Step 2: Find the smallest digit to the right of 'i' that is greater than digits[i]
+    j = length - 1
+    while digits[j] <= digits[i]:
+        j -= 1
+        
+    # Step 3: Swap digits[i] and digits[j]
+    digits[i], digits[j] = digits[j], digits[i]
+    
+    # Step 4: Reverse the sequence from index i + 1 to the end
+    digits[i + 1:] = reversed(digits[i + 1:])
+    
+    # Convert back to integer
+    result = int("".join(digits))
+    
+    # Step 5: Check 32-bit signed integer limit (2^31 - 1 = 2147483647)
+    MAX_INT32 = 2**31 - 1
+    if result > MAX_INT32:
+        return -1
+        
+    return result
+
+# Standard I/O handling
+if __name__ == "__main__":
+    input_data = sys.stdin.read().split()
+    if input_data:
+        n = int(input_data[0])
+        print(next_greater_number(n))
